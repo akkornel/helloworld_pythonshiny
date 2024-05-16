@@ -44,5 +44,5 @@ ENV TZ US/Pacific
 
 # Expose two ports, and start our app
 EXPOSE 8000
-EXPOSE 8001
+EXPOSE 3838
 CMD ["/usr/local/src/myscripts/run.sh"]

@@ -9,8 +9,8 @@ _sigterm() {
 trap _sigterm SIGTERM
 trap _sigterm SIGINT
 
-# First, run the Shiny app on port 8001
-PYTHONPATH=/usr/local/src/myscripts/app DEBUG=TRUE /usr/local/src/myscripts/bin/pipenv run uvicorn --host=0.0.0.0 --port=8001 --log-level=debug app:app &
+# First, run the Shiny app on port 3838
+PYTHONPATH=/usr/local/src/myscripts/app DEBUG=TRUE /usr/local/src/myscripts/bin/pipenv run uvicorn --host=0.0.0.0 --port=3838 --log-level=debug app:app &
 shiny_pid=$!
 
 # Next, run the proxy server on port 8000
