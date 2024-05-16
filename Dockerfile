@@ -36,13 +36,13 @@ RUN /usr/local/src/myscripts/bin/pipenv install --deploy && \
 # All of the app's code is in the app directory, so copy that into the image.
 COPY app /usr/local/src/myscripts/app
 
+# The run script also needs to be copied
+COPY run.sh /usr/local/src/myscripts/run.sh
+
 # Declare the environment variables we want, and set some default values.
 ENV TZ US/Pacific
 
-# When the container is run without an explicit command, this is what we do:
-# Start our Shiny app!  Listen on port 3838, and expose that to the outside.
-EXPOSE 3838
-#CMD ["/usr/local/src/myscripts/bin/pipenv", "run", "shiny", "run", "--app-dir=app", "--host=0.0.0.0", "--port=3838", "--log-level=debug"]
-ENV PYTHONPATH=/usr/local/src/myscripts/app
-ENV DEBUG=TRUE
-CMD ["/usr/local/src/myscripts/bin/pipenv", "run", "uvicorn", "--host=0.0.0.0", "--port=3838", "--log-level=debug", "app:app"]
+# Expose two ports, and start our app
+EXPOSE 8000
+EXPOSE 8001
+CMD ["/usr/local/src/myscripts/run.sh"]
