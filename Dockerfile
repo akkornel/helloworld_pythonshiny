@@ -7,12 +7,18 @@ FROM python:3.12-bookworm
 # Start with an apt-get upgrade, to update Ubuntu packages
 RUN apt-get update && apt-get upgrade -y && apt-get clean
 
+# Install nginx
+RUN apt-get install -y nginx && apt-get clean
+
 # Set up a venv, then install pipenv
 # NOTE: The pass /usr/local/src/myscripts came from Rocker's image.
 # It's a neat path; let's keep it.
 RUN python -m venv /usr/local/src/myscripts && \
 	/usr/local/src/myscripts/bin/pip install --upgrade pip && \
 	/usr/local/src/myscripts/bin/pip install pipenv
+
+# Copy the nginx config file
+COPY nginx_config /etc/nginx/sites-available/default
 
 # Copy just the requirements.txt and Pipfiles into the image
 # The code might change a lot, but the Pipfiles probably won't.
