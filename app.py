@@ -1,14 +1,22 @@
-from shiny import App, Inputs, Outputs, Session, render, ui
+from shiny import App, render, ui, reactive
+from pathlib import Path
 
 app_ui = ui.page_fluid(
-    ui.output_text("text")
+ui.tags.img(src="www/HLA Logo_ALL BLACK.png", width="105px",
+                                                            style="position: absolute; right: 0; height:60x; top: 0.5px;"),
+    ui.input_text('textBox', "Enter text here", value=''),
+    ui.input_action_button('runButton', 'Press me to print text!'),
+    ui.output_text('text')
 )
 
 
-def server(input: Inputs, output: Outputs, session: Session):
+def server(input, output, session):
+
     @render.text
+    @reactive.event(input.runButton)
     def text():
-        return 'Hello, World!'
+        return input.textBox()
 
 
-app = App(app_ui, server)
+app_dir = Path(__file__).parent
+app = App(app_ui, server, static_assets=app_dir)
