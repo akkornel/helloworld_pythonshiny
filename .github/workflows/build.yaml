@@ -1,9 +1,7 @@
 name: Build & Push Docker image
 
 on:
-  push:
-    branches:
-      - main
+  push
 
 env:
   REGISTRY: ghcr.io
