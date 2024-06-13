@@ -37,12 +37,13 @@ RUN /usr/local/src/myscripts/bin/pipenv install --deploy && \
 COPY app /usr/local/src/myscripts/app
 
 # The run script also needs to be copied
-COPY run.sh /usr/local/src/myscripts/run.sh
+#COPY run.sh /usr/local/src/myscripts/run.sh
 
 # Declare the environment variables we want, and set some default values.
 ENV TZ US/Pacific
 
 # Expose two ports, and start our app
-EXPOSE 8000
+#EXPOSE 8000
 EXPOSE 3838
-CMD ["/usr/local/src/myscripts/run.sh"]
+#CMD ["/usr/local/src/myscripts/run.sh"]
+CMD ["/usr/local/src/myscripts/bin/pipenv", "run", "shiny", "run", "--host=0.0.0.0", "--port=3838", "--log-level=trace", "--app-dir=app", "app"]
